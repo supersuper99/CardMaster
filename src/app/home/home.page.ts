@@ -6,7 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  currentCard: string = 'Ace of Spades';
 
   constructor() {}
 
+  addOne() {
+    
+  }
+
+  subtractOne() {
+   
+  }
 }
