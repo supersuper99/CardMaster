@@ -10,177 +10,69 @@ export class HomePage {
   @ViewChild('alertController')
   alertController: AlertController = new AlertController;
 
-  currentCard: any = { name: 'Ace of Spades', value: 1 };
+  currentCard: any;
   score: number = 0;
   cardHistory: any[] = [];
-  deck: any[] = [
-    { name: '2 of Spades', value: 2 },
-{ name: '3 of Spades', value: 3 },
-{ name: '4 of Spades', value: 4 },
-{ name: '5 of Spades', value: 5 },
-{ name: '6 of Spades', value: 6 },
-{ name: '7 of Spades', value: 7 },
-{ name: '8 of Spades', value: 8 },
-{ name: '9 of Spades', value: 9 },
-{ name: '10 of Spades', value: 10 },
-{ name: 'Jack of Spades', value: 10 },
-{ name: 'Queen of Spades', value: 10 },
-{ name: 'King of Spades', value: 10 },
-{ name: 'Ace of Spades', value: 1 },
+  deck: any[] = [];
 
-{ name: '2 of Hearts', value: 2 },
-{ name: '3 of Hearts', value: 3 },
-{ name: '4 of Hearts', value: 4 },
-{ name: '5 of Hearts', value: 5 },
-{ name: '6 of Hearts', value: 6 },
-{ name: '7 of Hearts', value: 7 },
-{ name: '8 of Hearts', value: 8 },
-{ name: '9 of Hearts', value: 9 },
-{ name: '10 of Hearts', value: 10 },
-{ name: 'Jack of Hearts', value: 10 },
-{ name: 'Queen of Hearts', value: 10 },
-{ name: 'King of Hearts', value: 10 },
-{ name: 'Ace of Hearts', value: 1 },
-
-{ name: '2 of Clubs', value: 2 },
-{ name: '3 of Clubs', value: 3 },
-{ name: '4 of Clubs', value: 4 },
-{ name: '5 of Clubs', value: 5 },
-{ name: '6 of Clubs', value: 6 },
-{ name: '7 of Clubs', value: 7 },
-{ name: '8 of Clubs', value: 8 },
-{ name: '9 of Clubs', value: 9 },
-{ name: '10 of Clubs', value: 10 },
-{ name: 'Jack of Clubs', value: 10 },
-{ name: 'Queen of Clubs', value: 10 },
-{ name: 'King of Clubs', value: 10 },
-{ name: 'Ace of Clubs', value: 1 },
-
-{ name: '2 of Diamonds', value: 2 },
-{ name: '3 of Diamonds', value: 3 },
-{ name: '4 of Diamonds', value: 4 },
-{ name: '5 of Diamonds', value: 5 },
-{ name: '6 of Diamonds', value: 6 },
-{ name: '7 of Diamonds', value: 7 },
-{ name: '8 of Diamonds', value: 8 },
-{ name: '9 of Diamonds', value: 9 },
-{ name: '10 of Diamonds', value: 10 },
-{ name: 'Jack of Diamonds', value: 10 },
-{ name: 'Queen of Diamonds', value: 10 },
-{ name: 'King of Diamonds', value: 10 },
-{ name: 'Ace of Diamonds', value: 1 }
-  ];
-
-  constructor() {}
-
-  async addOne() {
-    // Implement logic to add one to the current card count and update the score
-    if (this.currentCard.value === 1) {
-      this.score++;
-      this.cardHistory.push({
-        name: this.currentCard.name,
-        result: '+1',
-      });
-      this.nextCard();
-    } else {
-      const alert = await this.alertController.create({
-        header: 'Incorrect',
-        message: 'That is not a +1 card',
-        buttons: ['OK'],
-      });
-      await alert.present();
-    }
+  constructor() {
+    this.generateDeck();
+    this.currentCard = this.getNextCard();
   }
 
-  async subtractOne() {
-    // Implement logic to subtract one from the current card count and update the score
-    if (this.currentCard.value === -1) {
-      this.score--;
-      this.cardHistory.push({
-        name: this.currentCard.name,
-        result: '-1',
-      });
-      this.nextCard();
-    } else {
-      const alert = await this.alertController.create({
-        header: 'Incorrect',
-        message: 'That is not a -1 card',
-        buttons: ['OK'],
-      });
-      await alert.present();
-    }
-  }
-
-  nextCard() {
-    // Implement logic to get the next card from the deck and set it as the current card
-    if (this.deck.length > 0) {
-      this.currentCard = this.deck.shift();
-    } else {
-      this.resetDeck();
-    }
-  }
-
-  resetDeck() {
-    // Implement logic to reset the deck and current card
-    this.deck = [
-      { name: '2 of Spades', value: 2 },
-{ name: '3 of Spades', value: 3 },
-{ name: '4 of Spades', value: 4 },
-{ name: '5 of Spades', value: 5 },
-{ name: '6 of Spades', value: 6 },
-{ name: '7 of Spades', value: 7 },
-{ name: '8 of Spades', value: 8 },
-{ name: '9 of Spades', value: 9 },
-{ name: '10 of Spades', value: 10 },
-{ name: 'Jack of Spades', value: 10 },
-{ name: 'Queen of Spades', value: 10 },
-{ name: 'King of Spades', value: 10 },
-{ name: 'Ace of Spades', value: 1 },
-
-{ name: '2 of Hearts', value: 2 },
-{ name: '3 of Hearts', value: 3 },
-{ name: '4 of Hearts', value: 4 },
-{ name: '5 of Hearts', value: 5 },
-{ name: '6 of Hearts', value: 6 },
-{ name: '7 of Hearts', value: 7 },
-{ name: '8 of Hearts', value: 8 },
-{ name: '9 of Hearts', value: 9 },
-{ name: '10 of Hearts', value: 10 },
-{ name: 'Jack of Hearts', value: 10 },
-{ name: 'Queen of Hearts', value: 10 },
-{ name: 'King of Hearts', value: 10 },
-{ name: 'Ace of Hearts', value: 1 },
-
-{ name: '2 of Clubs', value: 2 },
-{ name: '3 of Clubs', value: 3 },
-{ name: '4 of Clubs', value: 4 },
-{ name: '5 of Clubs', value: 5 },
-{ name: '6 of Clubs', value: 6 },
-{ name: '7 of Clubs', value: 7 },
-{ name: '8 of Clubs', value: 8 },
-{ name: '9 of Clubs', value: 9 },
-{ name: '10 of Clubs', value: 10 },
-{ name: 'Jack of Clubs', value: 10 },
-{ name: 'Queen of Clubs', value: 10 },
-{ name: 'King of Clubs', value: 10 },
-{ name: 'Ace of Clubs', value: 1 },
-
-{ name: '2 of Diamonds', value: 2 },
-{ name: '3 of Diamonds', value: 3 },
-{ name: '4 of Diamonds', value: 4 },
-{ name: '5 of Diamonds', value: 5 },
-{ name: '6 of Diamonds', value: 6 },
-{ name: '7 of Diamonds', value: 7 },
-{ name: '8 of Diamonds', value: 8 },
-{ name: '9 of Diamonds', value: 9 },
-{ name: '10 of Diamonds', value: 10 },
-{ name: 'Jack of Diamonds', value: 10 },
-{ name: 'Queen of Diamonds', value: 10 },
-{ name: 'King of Diamonds', value: 10 },
-{ name: 'Ace of Diamonds', value: 1 }
+  generateDeck() {
+    const suits = ['Spades', 'Hearts', 'Clubs', 'Diamonds'];
+    const values = [
+      { name: '2', value: 1 },
+      { name: '3', value: 1 },
+      { name: '4', value: 1 },
+      { name: '5', value: 1 },
+      { name: '6', value: 1 },
+      { name: '7', value: 0 },
+      { name: '8', value: 0 },
+      { name: '9', value: 0 },
+      { name: '10', value: -1 },
+      { name: 'Jack', value: -1 },
+      { name: 'Queen', value: -1 },
+      { name: 'King', value: -1 },
+      { name: 'Ace', value: -1 },
     ];
-    this.currentCard = this.deck.shift();
-    this.score = 0;
-    this.cardHistory = [];
+
+    for (const suit of suits) {
+      for (const value of values) {
+        this.deck.push({
+          name: `${value.name} of ${suit}`,
+          value: value.value,
+        });
+      }
+    }
+  }
+
+  getNextCard() {
+    const index = Math.floor(Math.random() * this.deck.length);
+    return this.deck.splice(index, 1)[0];
+  }
+
+  async checkAnswer(selectedValue: number) {
+    let message = '';
+    if (selectedValue === this.currentCard.value) {
+      message = 'Correct!';
+      this.score++;
+    } else {
+      message = 'Incorrect.';
+    }
+    const alert = await this.alertController.create({
+      header: message,
+      message: `The value of the ${this.currentCard.name} is ${this.currentCard.value}.`,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this.currentCard = this.getNextCard();
+          },
+        },
+      ],
+    });
+    alert.present();
   }
 }
