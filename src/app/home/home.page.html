@@ -7,7 +7,7 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>{{ currentCard }}</ion-card-title>
+      <ion-card-title>{{ currentCard.name }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-button (click)="addOne()" color="primary">+1</ion-button>
@@ -33,15 +33,8 @@
       </ion-list>
     </ion-card-content>
   </ion-card>
+
+  <ion-button (click)="resetDeck()" color="warning" expand="block">Reset Deck</ion-button>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="openTutorial()">Tutorial</ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button (click)="openSettings()">Settings</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
+<ion-alert-controller></ion-alert-controller>
