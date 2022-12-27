@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  @ViewChild('alertController')
+  alertController: AlertController = new AlertController;
+
   currentCard: any = { name: 'Ace of Spades', value: 1 };
   score: number = 0;
   cardHistory: any[] = [];
@@ -69,24 +73,42 @@ export class HomePage {
 
   constructor() {}
 
-  addOne() {
+  async addOne() {
     // Implement logic to add one to the current card count and update the score
-    this.score++;
-    this.cardHistory.push({
-      name: this.currentCard.name,
-      result: '+1',
-    });
-    this.nextCard();
+    if (this.currentCard.value === 1) {
+      this.score++;
+      this.cardHistory.push({
+        name: this.currentCard.name,
+        result: '+1',
+      });
+      this.nextCard();
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Incorrect',
+        message: 'That is not a +1 card',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
   }
 
-  subtractOne() {
+  async subtractOne() {
     // Implement logic to subtract one from the current card count and update the score
-    this.score--;
-    this.cardHistory.push({
-      name: this.currentCard.name,
-      result: '-1',
-    });
-    this.nextCard();
+    if (this.currentCard.value === -1) {
+      this.score--;
+      this.cardHistory.push({
+        name: this.currentCard.name,
+        result: '-1',
+      });
+      this.nextCard();
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Incorrect',
+        message: 'That is not a -1 card',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
   }
 
   nextCard() {
